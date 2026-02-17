@@ -136,6 +136,74 @@ export type Database = {
         }
         Relationships: []
       }
+      game_rooms: {
+        Row: {
+          created_at: string
+          created_by: string
+          game_type: string
+          id: string
+          max_players: number | null
+          room_name: string
+          status: string
+          target_score: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          game_type: string
+          id: string
+          max_players?: number | null
+          room_name: string
+          status?: string
+          target_score?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          game_type?: string
+          id?: string
+          max_players?: number | null
+          room_name?: string
+          status?: string
+          target_score?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      game_rounds: {
+        Row: {
+          created_at: string
+          id: string
+          room_id: string
+          round_data: Json | null
+          round_number: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          room_id: string
+          round_data?: Json | null
+          round_number?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          room_id?: string
+          round_data?: Json | null
+          round_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_rounds_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "game_rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -210,6 +278,44 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      room_players: {
+        Row: {
+          created_at: string
+          id: string
+          is_dealer: boolean
+          player_name: string
+          room_id: string
+          score: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_dealer?: boolean
+          player_name: string
+          room_id: string
+          score?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_dealer?: boolean
+          player_name?: string
+          room_id?: string
+          score?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_players_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "game_rooms"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       seo_settings: {
         Row: {
